@@ -5,12 +5,12 @@ import Menu from './menu/Menu.vue';
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     component: Homepage
   },
 
   {
-    path: '/login/',
+    path: '/',
     component: Login
   },
 
