@@ -30,13 +30,13 @@ import Sidebar from '../../components/Sidebar.vue';
       <form class="p-3 mt-3">
           <div class="form-field d-flex align-items-center">
               <span class="far fa-user"></span>
-              <input type="text" name="userName" id="userName" placeholder="Username">
+              <input type="text" name="userName" v-model="postLogin.username" id="userName" placeholder="Username">
           </div>
           <div class="form-field d-flex align-items-center">
               <span class="fas fa-key"></span>
-              <input type="password" name="password" id="pwd" placeholder="Password">
+              <input type="password" name="password" v-model="postLogin.password" id="pwd" placeholder="Password">
           </div>
-          <button class="btn mt-3">Login</button>
+          <button class="btn mt-3" @click="login">Login</button>
       </form>
   </div>
 </template>
@@ -144,19 +144,26 @@ body {
 </style>
 
 <script>
-export default {
-  components: {
-    Sidebar
-  },
+import AuthService from '../../services/auth-service.js';
+import { ref } from 'vue';
 
-  computed: {},
-  
-  mounted() {
-  },
-  
-  data() {
-    return {
-    };
-  },
-};
+const postLogin =  ref({
+  username: '',
+  password: ''
+})
+
+const authService = new AuthService();
+
+async function login(){
+    try{
+        const response = await authService.login(postLogin.value);
+        setTimeout(() => {
+            window.location.href = '/menu';
+        }, 100000);
+        console.log(response);
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 </script>
